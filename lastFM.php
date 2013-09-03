@@ -21,15 +21,15 @@ class Last_FM_Widget extends WP_Widget {
 	}
 
 	// widget form creation
-function form($instance) {
+	function form($instance) {
 
-	// Check values
-	if($instance) {
-	     $title = esc_attr($instance['title']);
-	     $userName = esc_attr($instance['userName']);
-	} else {
-	     $title = '';
-	     $userName = '';
+		// Check values
+		if($instance) {
+	   $title = esc_attr($instance['title']);
+	   $userName = esc_attr($instance['userName']);
+		} else {
+	   $title = '';
+	   $userName = '';
 	}
 	?>
 
