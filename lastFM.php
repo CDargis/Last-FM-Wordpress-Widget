@@ -73,7 +73,7 @@ class Last_FM_Widget extends WP_Widget {
    // Check if text is set
    if( $userName ) {
     $numTracks = 5;
-    echo '<h5 class="wp_widget_plugin_text last-fm-widget-header">'.'Last '.$numTracks.' tracks for '.$userName.':</h5>';
+    echo '<h5 class="wp_widget_plugin_text last-fm-text-item last-fm-widget-header">'.'Last '.$numTracks.' tracks for '.$userName.':</h5>';
     
     $baseURI = 'https://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&format=json&api_key=fd04949ecca5f5d53a875f057fce53e6';
     $requestURI = $baseURI.'&limit=5'.'&user='.$userName;
@@ -84,7 +84,10 @@ class Last_FM_Widget extends WP_Widget {
     for($i = 0; $i < $numTracks; $i++) {
       $track = $obj['recenttracks']['track'][$i]['name'];
       $artist = $obj['recenttracks']['track'][$i]['artist']['#text'];
-      echo '<p>'.$track.' - '.$artist.'</p>';
+      $imgURL = $obj['recenttracks']['track'][$i]['image'][0]['#text'];
+      echo '<div class="last-fm-item"><img class="last-fm-album" src='.$imgURL.'>';
+      echo '<p class="last-fm-text-item">'.$track.' - '.$artist.'</p>';
+      echo '</div>';
     }
    }
 
