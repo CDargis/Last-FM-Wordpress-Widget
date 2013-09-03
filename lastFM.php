@@ -2,11 +2,11 @@
 
 /*
 Plugin Name: Last FM Plugin
-Plugin URI: 
+Plugin URI: https://github.com/CDargis/Last-FM-Wordpress-Widget
 Description: Display tracks of Last FM
 Version: 0.0.1
 Author: Chris Dargis
-Author URI: 
+Author URI: http://www.chrisdargis.com
 License: GPL2
 */
 
