@@ -91,15 +91,17 @@ class Last_FM_Widget extends WP_Widget {
     $json = file_get_contents($requestURI);
     $obj = json_decode($json, true);
 
+    echo '<ol class="last-fm-list">';
     // Iterate through each song:
     for($i = 0; $i < $numTracks; $i++) {
       $track = $obj['recenttracks']['track'][$i]['name'];
       $artist = $obj['recenttracks']['track'][$i]['artist']['#text'];
       $imgURL = $obj['recenttracks']['track'][$i]['image'][0]['#text'];
-      echo '<div class="last-fm-item"><img class="last-fm-album" src='.$imgURL.'>';
-      echo '<p class="last-fm-text-item">'.$track.' - '.$artist.'</p>';
-      echo '</div>';
+      //echo '<div class="last-fm-item"><img class="last-fm-album" src='.$imgURL.'>';
+      echo '<li class="last-fm-list-item">'.$track.' - '.$artist.'</li>';
+      //echo '</div>';
     }
+    echo '</ol>';
    }
 
    echo '</div>';
