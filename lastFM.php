@@ -27,9 +27,11 @@ class Last_FM_Widget extends WP_Widget {
     if($instance) {
      $title = esc_attr($instance['title']);
      $userName = esc_attr($instance['userName']);
+     $apiKey = esc_attr($instance['apiKey']);
     } else {
      $title = '';
      $userName = '';
+     $apiKey = '';
   }
   ?>
 
@@ -39,8 +41,13 @@ class Last_FM_Widget extends WP_Widget {
   </p>
 
   <p>
-  <label for="<?php echo $this->get_field_id('userName'); ?>"><?php _e('Last FM User Name:', 'wp_widget_plugin'); ?></label>
+  <label for="<?php echo $this->get_field_id('userName'); ?>"><?php _e('Last FM User Name', 'wp_widget_plugin'); ?></label>
   <input class="widefat" id="<?php echo $this->get_field_id('userName'); ?>" name="<?php echo $this->get_field_name('userName'); ?>" type="text" value="<?php echo $userName; ?>" />
+  </p>
+
+  <p>
+  <label for="<?php echo $this->get_field_id('apiKey'); ?>"><?php _e('Last FM API Key', 'wp_widget_plugin'); ?></label>
+  <input class="widefat" id="<?php echo $this->get_field_id('apiKey'); ?>" name="<?php echo $this->get_field_name('apiKey'); ?>" type="text" value="<?php echo $apiKey; ?>" />
   </p>
 
   <?php
@@ -52,6 +59,7 @@ class Last_FM_Widget extends WP_Widget {
     // Fields
     $instance['title'] = strip_tags($new['title']);
     $instance['userName'] = strip_tags($new['userName']);
+    $instance['apiKey'] = strip_tags($new['apiKey']);
     return $instance;
   }
 
@@ -61,22 +69,25 @@ class Last_FM_Widget extends WP_Widget {
     // these are the widget options
     $title = apply_filters('widget_title', $instance['title']);
     $userName = $instance['userName'];
+    $apiKey = $instance['apiKey'];
+
     echo $before_widget;
+    
     // Display the widget
     echo '<div class="widget-text wp_widget_plugin_box">';
 
    // Check if title is set
-   if ( $title ) {
+   if ($title) {
     echo $before_title . $title . $after_title;
    }
 
    // Check if text is set
-   if( $userName ) {
+   if($userName && $apiKey) {
     $numTracks = 5;
-    echo '<h5 class="wp_widget_plugin_text last-fm-text-item last-fm-widget-header">'.'Last '.$numTracks.' tracks for '.$userName.':</h5>';
-    
-    $baseURI = 'https://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&format=json&api_key=fd04949ecca5f5d53a875f057fce53e6';
+
+    $baseURI = 'https://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&format=json&api_key='.$apiKey;
     $requestURI = $baseURI.'&limit=5'.'&user='.$userName;
+
     $json = file_get_contents($requestURI);
     $obj = json_decode($json, true);
 
